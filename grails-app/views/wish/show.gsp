@@ -59,11 +59,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${wishInstance?.createTime}">
+				<g:if test="${wishInstance?.dateCreated}">
 				<li class="fieldcontain">
-					<span id="createTime-label" class="property-label"><g:message code="wish.createTime.label" default="Create Time" /></span>
+					<span id="dateCreated-label" class="property-label"><g:message code="wish.dateCreated.label" default="Date Created" /></span>
 					
-						<span class="property-value" aria-labelledby="createTime-label"><g:formatDate date="${wishInstance?.createTime}" /></span>
+						<span class="property-value" aria-labelledby="dateCreated-label"><g:formatDate date="${wishInstance?.dateCreated}" /></span>
 					
 				</li>
 				</g:if>

@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException
 class NewlywedsController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	def beforeInterceptor = [action:this.&auth,except:['login', 'logout', 'logincheck']]
 
     def index() {
         redirect(action: "list", params: params)
@@ -99,4 +100,41 @@ class NewlywedsController {
             redirect(action: "show", id: id)
         }
     }
+	
+	//登录
+	def login(){
+		
+	}
+	
+	
+	//认证
+	def auth(){
+		if(session.master == '靖星'){ 
+		  flash.message = "Hello 靖星主人!"
+		 }else{
+			flash.message = "对不起！木有认证."
+			redirect(action:"login")
+			return false
+		 }
+		}
+	
+	
+	 //认证
+		def logincheck(){
+			if(params.authcode.toString()=='Zeng!@#qing)(*feng05'){ 
+			  session.master = '靖星'
+              flash.message = "Hello 主人!"
+              redirect(action:"list") 
+             }else{
+				flash.message = "对不起！密码错误，请重试."
+				redirect(action:"login") 
+			 }
+			}
+		
+		//登出
+		def logout = {
+			flash.message = "Goodbye 主人"
+			session.authcode = null
+			redirect(controller:"wish")
+			}
 }

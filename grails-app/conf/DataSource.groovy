@@ -1,8 +1,8 @@
 dataSource {
     pooled = true
-    driverClassName = "org.h2.Driver"
-    username = "sa"
-    password = ""
+    url = 'jdbc:mysql://192.168.1.111:3306/grails?autoreconnect=trueuseUnicode=true&characterEncoding=UTF-8'
+    username = 'root'
+    password = 'Dx!0@9#8Nb'
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -13,21 +13,18 @@ hibernate {
 environments {
     development {
         dataSource {
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-        }
+            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+         }
     }
     test {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-        }
+         }
     }
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-            pooled = true
+             pooled = true
             properties {
                maxActive = -1
                minEvictableIdleTimeMillis=1800000

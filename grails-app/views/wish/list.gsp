@@ -12,7 +12,7 @@
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="create" action="create"><g:message code="wish.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<div id="list-wish" class="content scaffold-list" role="main">
@@ -32,7 +32,7 @@
 					
 						<g:sortableColumn property="wish" title="${message(code: 'wish.wish.label', default: 'Wish')}" />
 					
-						<g:sortableColumn property="createTime" title="${message(code: 'wish.createTime.label', default: 'Create Time')}" />
+						<g:sortableColumn property="dateCreated" title="${message(code: 'wish.dateCreated.label', default: 'Date Created')}" />
 					
 					</tr>
 				</thead>
@@ -48,7 +48,7 @@
 					
 						<td>${fieldValue(bean: wishInstance, field: "wish")}</td>
 					
-						<td><g:formatDate date="${wishInstance.createTime}" /></td>
+						<td><g:formatDate date="${wishInstance.dateCreated}" /></td>
 					
 					</tr>
 				</g:each>

@@ -1,0 +1,8 @@
+﻿body {
+	padding-top: 60px;
+	background: url(../images/bg_main.jpg) repeat top left fixed;
+}
+
+.topnavpad { 
+    background: green url(../images/header.jpg) repeat-x; 
+}

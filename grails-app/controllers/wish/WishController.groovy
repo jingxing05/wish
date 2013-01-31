@@ -5,13 +5,22 @@ import org.springframework.dao.DataIntegrityViolationException
 class WishController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-
+	def beforeInterceptor = [action:this.&initnewlyweds]
+	
+	
     def index() {
-        redirect(action: "list", params: params)
+		[wishInstanceList: Wish.list(params)]
     }
+	
+	def initnewlyweds(){
+		if(!session.newlyweds){
+			session.newlyweds = Newlyweds.get(1)
+		}  
+		session.wishcounts = Wish.count()
+	}
 
     def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = Math.min(max ?: 10, 1000)
         [wishInstanceList: Wish.list(params), wishInstanceTotal: Wish.count()]
     }
 
@@ -27,7 +36,7 @@ class WishController {
         }
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'wish.label', default: 'Wish'), wishInstance.id])
-        redirect(action: "show", id: wishInstance.id)
+        redirect(action: "index")
     }
 
     def show(Long id) {
@@ -45,7 +54,7 @@ class WishController {
         def wishInstance = Wish.get(id)
         if (!wishInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), id])
-            redirect(action: "list")
+            redirect(action: "index")
             return
         }
 
@@ -56,7 +65,7 @@ class WishController {
         def wishInstance = Wish.get(id)
         if (!wishInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), id])
-            redirect(action: "list")
+            redirect(action: "index")
             return
         }
 
@@ -78,25 +87,25 @@ class WishController {
         }
 
         flash.message = message(code: 'default.updated.message', args: [message(code: 'wish.label', default: 'Wish'), wishInstance.id])
-        redirect(action: "show", id: wishInstance.id)
+        redirect(action: "index")
     }
 
     def delete(Long id) {
         def wishInstance = Wish.get(id)
         if (!wishInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'wish.label', default: 'Wish'), id])
-            redirect(action: "list")
+            redirect(action: "index")
             return
         }
 
         try {
             wishInstance.delete(flush: true)
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'wish.label', default: 'Wish'), id])
-            redirect(action: "list")
+            redirect(action: "index")
         }
         catch (DataIntegrityViolationException e) {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'wish.label', default: 'Wish'), id])
-            redirect(action: "show", id: id)
+            redirect(action: "index")
         }
     }
 }
